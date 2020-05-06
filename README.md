@@ -1,9 +1,8 @@
 # clj
-### _Your Name <your.name@example.com>_
+### _inaimathi <leo.zovic@gmail.com>_
 
-This is a project to do ... something.
+Some conveniences from the Clojure world. Because they've got some good ideas, but dammit, I'm a Common Lisper.
 
 ## License
 
-Specify license here
-
+[MIT Expat](https://www.debian.org/legal/licenses/mit), the way Clojure can't be
