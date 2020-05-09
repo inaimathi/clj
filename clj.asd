@@ -6,9 +6,11 @@
   :license "Specify license here"
   :version "0.0.1"
   :serial t
+  :depends-on (#:named-readtables #:cl-hamt)
   :components ((:module
 		src :components
 		((:file "package")
+		 (:file "syntax")
 		 (:file "clj")))))
 
 (asdf:defsystem #:clj-test
@@ -21,6 +23,7 @@
   :components ((:module
                 test :components
                 ((:file "package")
+		 (:test-file "syntax")
                  (:test-file "clj"))))
   :perform (test-op
 	    :after (op c)

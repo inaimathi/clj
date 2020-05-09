@@ -2,5 +2,6 @@
 
 (defpackage #:clj
   (:use #:cl)
-  (:export #:-> #:->>
+  (:export #:syntax
+	   #:-> #:->>
 	   #:if-let #:when-let))
