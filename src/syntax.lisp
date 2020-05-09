@@ -2,12 +2,10 @@
 
 (defun hash-literal-reader (stream char)
   (declare (ignore char))
-  (reduce
-   (lambda (dict elem)
-     (cl-hamt:dict-insert dict (car elem) (cdr elem)))
-   (loop for (k v) on (read-delimited-list #\} stream t) by #'cddr
-      collect (cons k v))
-   :initial-value (cl-hamt:empty-dict)))
+  (loop with dict = (cl-hamt:empty-dict)
+     for (k v) on (read-delimited-list #\} stream t) by #'cddr
+     do (setf dict (cl-hamt:dict-insert dict k v))
+     finally (return dict)))
 
 (defun set-literal-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
