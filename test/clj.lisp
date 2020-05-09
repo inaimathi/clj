@@ -16,7 +16,10 @@
    (is-expand (-> a foo (bar 1) (bar 2)) (bar (bar (foo a) 1) 2)
 	      "Thread can nest single and multi-arity function calls")
    (is-expand (-> a foo (bar 1) (bar 2) baz) (baz (bar (bar (foo a) 1) 2))
-	      "Thread can nest single and multi-arity function calls. Again."))
+	      "Thread can nest single and multi-arity function calls. Again.")
+   (is-expand (-> a #'foo (lambda (b) (bar b)) baz)
+	      (BAZ (FUNCALL (LAMBDA (B) (BAR B)) (FUNCALL #'FOO A)))
+	      "Thread handles #' terms and lambda forms properly"))
 
  (subtest "Rthread"
    (is-expand (->> a foo) (foo a)
@@ -30,4 +33,7 @@
    (is-expand (->> a foo (bar 1) (bar 2)) (bar 2 (bar 1 (foo a)))
 	      "Rthread can nest single and multi-arity function calls")
    (is-expand (->> a foo (bar 1) (bar 2) baz) (baz (bar 2 (bar 1 (foo a))))
-	      "Rthread can nest single and multi-arity function calls. Again.")))
+	      "Rthread can nest single and multi-arity function calls. Again.")
+   (is-expand (->> a #'foo (lambda (b) (bar b)) baz)
+	      (BAZ (FUNCALL (LAMBDA (B) (BAR B)) (FUNCALL #'FOO A)))
+	      "Rthread handles #' terms and lambda forms properly")))
