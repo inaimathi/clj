@@ -1,5 +1,6 @@
 (in-package :clj)
 
+;;;;;;;;;; Dicts
 (defun hash-literal-reader (stream char)
   (declare (ignore char))
   (loop with dict = (cl-hamt:empty-dict :test #'==)
@@ -7,9 +8,7 @@
      do (setf dict (cl-hamt:dict-insert dict k v))
      finally (return dict)))
 
-(defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-dict) &key (seed cl-murmurhash:*default-seed*) mix-only)
-  (cl-murmurhash:murmurhash (cl-hamt:dict->alist object) :seed seed :mix-only mix-only))
-
+;;;;;;;;;; Sets
 (defun set-literal-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
   (reduce
@@ -18,9 +17,7 @@
    (read-delimited-list #\} stream t)
    :initial-value (cl-hamt:empty-set :test #'==)))
 
-(defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-set) &key (seed cl-murmurhash:*default-seed*) mix-only)
-  (cl-murmurhash:murmurhash (cl-hamt:set->list object) :seed seed :mix-only mix-only))
-
+;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax
   (:merge :standard)
   (:macro-char #\{ #'hash-literal-reader nil)

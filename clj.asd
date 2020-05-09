@@ -11,7 +11,8 @@
 		src :components
 		((:file "package")
 		 (:file "syntax")
-		 (:file "readable-representations")
+		 (:file "map")
+		 (:file "set")
 		 (:file "clj")))))
 
 (asdf:defsystem #:clj-test
