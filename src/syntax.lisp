@@ -1,6 +1,11 @@
 (in-package :clj)
 
-;;;;;;;;;; Dicts
+;;;;;;;;;; Maps
+(defun alist->map (alist)
+  (loop with dict = (cl-hamt:empty-dict :test #'==)
+     for (k . v) in alist do (setf dict (cl-hamt:dict-insert dict k v))
+     finally (return dict)))
+
 (defun hash-literal-reader (stream char)
   (declare (ignore char))
   (loop with dict = (cl-hamt:empty-dict :test #'==)
@@ -9,13 +14,15 @@
      finally (return dict)))
 
 ;;;;;;;;;; Sets
-(defun set-literal-reader (stream sub-char numarg)
-  (declare (ignore sub-char numarg))
+(defun list->set (lst)
   (reduce
    (lambda (set elem)
      (cl-hamt:set-insert set elem))
-   (read-delimited-list #\} stream t)
-   :initial-value (cl-hamt:empty-set :test #'==)))
+   lst :initial-value (cl-hamt:empty-set :test #'==)))
+
+(defun set-literal-reader (stream sub-char numarg)
+  (declare (ignore sub-char numarg))
+  (list->set (read-delimited-list #\} stream t)))
 
 ;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax

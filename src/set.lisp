@@ -1,10 +1,16 @@
 (in-package :clj)
 
 (defmethod print-object ((object cl-hamt:hash-set) stream)
-  (format stream "#{~{~s~^ ~}}" (cl-hamt:set->list object)))
+  (if (eq 'clj:syntax (named-readtables:readtable-name *readtable*))
+      (format stream "#{~{~s~^ ~}}" (cl-hamt:set->list object))
+      (format stream "(CLJ:LIST->SET (LIST ~{~S~^ ~}))" (cl-hamt:set->list object))))
 
 (defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-set) &key (seed cl-murmurhash:*default-seed*) mix-only)
   (cl-murmurhash:murmurhash (cl-hamt:set->list object) :seed seed :mix-only mix-only))
+
+(defmethod insert ((container cl-hamt:hash-set) k &optional v)
+  (declare (ignore v))
+  (cl-hamt:set-insert container k))
 
 (defmethod lookup ((container cl-hamt:hash-set) key)
   (cl-hamt:set-lookup container key))
