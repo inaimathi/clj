@@ -6,8 +6,9 @@
      for (k . v) in alist do (setf dict (cl-hamt:dict-insert dict k v))
      finally (return dict)))
 
-(defun hash-literal-reader (stream char)
+(defun map-literal-reader (stream char)
   (declare (ignore char))
+  ;; TODO - check for an even number of elements here and throw an error if there isn't
   (loop with dict = (cl-hamt:empty-dict :test #'==)
      for (k v) on (read-delimited-list #\} stream t) by #'cddr
      do (setf dict (cl-hamt:dict-insert dict k v))
@@ -27,6 +28,6 @@
 ;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax
   (:merge :standard)
-  (:macro-char #\{ #'hash-literal-reader nil)
+  (:macro-char #\{ #'map-literal-reader nil)
   (:macro-char #\} (get-macro-character #\)) nil)
   (:dispatch-macro-char #\# #\{ #'set-literal-reader))
