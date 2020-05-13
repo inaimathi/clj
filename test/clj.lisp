@@ -3,12 +3,17 @@
 (in-package #:clj-test)
 
 (tests
-
- (subtest "Thread"
+ (subtest "Common threads"
    (is-expand (-> a foo) (foo a)
 	      "Thread applies a function to an argument")
    (is-expand (-> a foo bar) (bar (foo a))
 	      "Thread can compose multiple functions")
+   (is-expand (->> a foo) (foo a)
+	      "Rthread applies a function to an argument")
+   (is-expand (->> a foo bar) (bar (foo a))
+	      "Rthread can compose multiple functions"))
+
+ (subtest "Thread"
    (is-expand (-> a (foo 1)) (foo a 1)
 	      "If called with a partially applied multi-argument function, thread plants the target in the first slot")
    (is-expand (-> a (foo 1) (foo 2)) (foo (foo a 1) 2)
@@ -22,10 +27,6 @@
 	      "Thread handles #' terms and lambda forms properly"))
 
  (subtest "Rthread"
-   (is-expand (->> a foo) (foo a)
-	      "Rthread applies a function to an argument")
-   (is-expand (->> a foo bar) (bar (foo a))
-	      "Rthread can compose multiple functions")
    (is-expand (->> a (foo 1)) (foo 1 a)
 	      "If called with a partially applied multi-argument function, rthread plants the target in the last slot")
    (is-expand (->> a (foo 1) (foo 2)) (foo 2 (foo 1 a))
