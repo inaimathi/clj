@@ -12,6 +12,27 @@
      (progn ,@then)
      nil))
 
+(defmacro fn (&rest args)
+  (optima:match args
+    ((optima:guard
+      (cons name (cons params (cons docstring body)))
+      (and (symbolp name) (listp params) (stringp docstring)))
+     `(labels ((,name ,params ,docstring ,@body))
+	#',name))
+    ((optima:guard
+      (cons name (cons params body))
+      (and (symbolp name) (listp params)))
+     `(labels ((,name ,params ,@body))
+	#',name))
+    ((optima:guard
+      (cons params (cons docstring body))
+      (and (listp params) (stringp docstring)))
+     `(lambda ,params ,docstring ,@body))
+    ((optima:guard
+      (cons params body)
+      (and (listp params)))
+     `(lambda ,params ,@body))))
+
 (defmacro -> (exp &rest ops)
   (reduce
    (lambda (memo op)
