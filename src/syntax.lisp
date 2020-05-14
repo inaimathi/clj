@@ -8,11 +8,12 @@
 
 (defun map-literal-reader (stream char)
   (declare (ignore char))
-  ;; TODO - check for an even number of elements here and throw an error if there isn't
-  (loop with dict = (cl-hamt:empty-dict :test #'==)
-     for (k v) on (read-delimited-list #\} stream t) by #'cddr
-     do (setf dict (cl-hamt:dict-insert dict k v))
-     finally (return dict)))
+  (let ((parsed (read-delimited-list #\} stream t)))
+    (assert (evenp (length parsed)) nil "Map literal must have an even number of elements")
+    (loop with dict = (cl-hamt:empty-dict :test #'==)
+       for (k v) on parsed by #'cddr
+       do (setf dict (cl-hamt:dict-insert dict k v))
+       finally (return dict))))
 
 ;;;;;;;;;; Sets
 (defun list->set (lst)
