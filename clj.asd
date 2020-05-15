@@ -10,6 +10,7 @@
   :components ((:module
 		src :components
 		((:file "package")
+		 (:file "types")
 		 (:file "syntax")
 		 (:file "map")
 		 (:file "set")
