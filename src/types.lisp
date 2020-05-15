@@ -42,7 +42,7 @@
 (defun map-type? (type)
   (and type
        (listp type)
-       (eq (car type) 'dict)))
+       (eq (car type) 'map)))
 
 (defun kv-types (k-type v-type)
   (lambda (map)
@@ -51,7 +51,7 @@
        (and memo (typep k k-type) (typep v v-type)))
      map t)))
 
-(deftype dict (&optional keys vals)
+(deftype map (&optional keys vals)
   (format t "TYPECHECK ~a ~b" keys vals)
   (let ((sym (intern (format nil "MAP-TYPE-~a-~a" keys vals) :clj)))
 

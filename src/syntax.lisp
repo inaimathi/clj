@@ -48,4 +48,4 @@
   (:macro-char #\{ #'map-literal-reader nil)
   (:macro-char #\} (get-macro-character #\)) nil)
   (:dispatch-macro-char #\# #\{ #'set-literal-reader)
-  (:dispatch-macro-char #\# #\: #'type-literal-reader))
+  (:dispatch-macro-char #\# #\# #'type-literal-reader))

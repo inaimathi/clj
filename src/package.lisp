@@ -2,6 +2,7 @@
 
 (defpackage #:clj
   (:use #:cl)
+  (:shadow #:map)
   (:export #:syntax
 	   #:== #:alist->map #:list->set
 	   #:-> #:->>

@@ -26,6 +26,7 @@
   :components ((:module
                 test :components
                 ((:file "package")
+		 (:test-file "types")
 		 (:test-file "syntax")
                  (:test-file "clj"))))
   :perform (test-op
