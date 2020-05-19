@@ -6,10 +6,11 @@
   :license "Specify license here"
   :version "0.0.1"
   :serial t
-  :depends-on (#:named-readtables #:cl-hamt #:optima) ;; #:arrow-macros
+  :depends-on (#:named-readtables #:cl-hamt #:optima #:fast-generic-functions) ;; #:arrow-macros
   :components ((:module
 		src :components
 		((:file "package")
+		 (:file "generics")
 		 (:file "types")
 		 (:file "syntax")
 		 (:file "map")

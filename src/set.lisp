@@ -8,12 +8,13 @@
 (defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-set) &key (seed cl-murmurhash:*default-seed*) mix-only)
   (cl-murmurhash:murmurhash (cl-hamt:set->list object) :seed seed :mix-only mix-only))
 
-(defmethod insert ((container cl-hamt:hash-set) k &optional v)
-  (declare (ignore v))
-  (cl-hamt:set-insert container k))
+(defmethod == ((a cl-hamt:hash-set) (b cl-hamt:hash-set))
+  (cl-hamt:set-eq a b))
 
 (defmethod lookup ((container cl-hamt:hash-set) key)
   (cl-hamt:set-lookup container key))
 
-(defmethod == ((a cl-hamt:hash-set) (b cl-hamt:hash-set))
-  (cl-hamt:set-eq a b))
+(defmethod insert ((container cl-hamt:hash-set) elem)
+  (cl-hamt:set-insert container elem))
+
+(defmethod len ((container cl-hamt:hash-set)) (cl-hamt:set-size container))

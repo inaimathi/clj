@@ -12,11 +12,13 @@
 (defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-dict) &key (seed cl-murmurhash:*default-seed*) mix-only)
   (cl-murmurhash:murmurhash (cl-hamt:dict->alist object) :seed seed :mix-only mix-only))
 
-(defmethod insert ((container cl-hamt:hash-dict) k &optional v)
-  (cl-hamt:dict-insert container k v))
+(defmethod == ((a cl-hamt:hash-dict) (b cl-hamt:hash-dict))
+  (cl-hamt:dict-eq a b :value-test #'==))
 
 (defmethod lookup ((container cl-hamt:hash-dict) key)
   (cl-hamt:dict-lookup container key))
 
-(defmethod == ((a cl-hamt:hash-dict) (b cl-hamt:hash-dict))
-  (cl-hamt:dict-eq a b :value-test #'==))
+(defmethod insert ((container cl-hamt:hash-dict) k/v)
+  (cl-hamt:dict-insert container (car k/v) (cdr k/v)))
+
+(defmethod len ((container cl-hamt:hash-dict)) (cl-hamt:dict-size container))

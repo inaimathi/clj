@@ -59,3 +59,25 @@
       (setf (fdefinition sym) (kv-types keys vals)))
 
     `(and (satisfies map?) (satisfies ,sym))))
+
+(defun set? (thing)
+  (typep thing 'cl-hamt:hash-set))
+
+(defun set-type? (type)
+  (and type
+       (listp type)
+       (eq (car type) 'set)))
+
+(defun seq-types (v-type)
+  (lambda (set)
+    (cl-hamt:set-reduce
+     (lambda (memo elem)
+       (and memo (typep elem v-type)))
+     set t)))
+
+(deftype set (&optional vals)
+  (let ((sym (intern (format nil "SET-TYPE-~a" vals) :clj)))
+    (unless (fboundp sym)
+      (setf (fdefinition sym) (seq-types vals)))
+
+    `(and (satisfies set?) (satisfies ,sym))))

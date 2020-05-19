@@ -46,6 +46,4 @@
 	   (t `(,@op ,memo))))
    ops :initial-value exp))
 
-(defmethod == (a b) (equalp a b))
-
 (named-readtables:in-readtable syntax)
