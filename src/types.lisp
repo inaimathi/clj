@@ -52,7 +52,6 @@
      map t)))
 
 (deftype map (&optional keys vals)
-  (format t "TYPECHECK ~a ~b" keys vals)
   (let ((sym (intern (format nil "MAP-TYPE-~a-~a" keys vals) :clj)))
 
     (unless (fboundp sym)
