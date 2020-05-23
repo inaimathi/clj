@@ -24,5 +24,4 @@
       (and (listp params)))
      `(lambda ,params ,@body))))
 
-
 (named-readtables:in-readtable syntax)

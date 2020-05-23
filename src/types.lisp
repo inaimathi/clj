@@ -76,6 +76,7 @@
 
 (deftype set (&optional vals)
   (let ((sym (intern (format nil "SET-TYPE-~a" vals) :clj)))
+
     (unless (fboundp sym)
       (setf (fdefinition sym) (seq-types vals)))
 
