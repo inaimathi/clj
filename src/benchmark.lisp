@@ -132,3 +132,13 @@
 	    (list (funcall len map)
 		  (funcall lookup inserted :test-key)
 		  (funcall len inserted))))))
+
+(defun typed/untyped-benchmark (&key (times 10000))
+  (loop repeat times
+     do (let* ((map (alist->map
+		     (test-utils:generate (test-utils:a-list pair-gen))
+		     :equality equality))
+	       (inserted (funcall insert map (cons :test-key :test-value))))
+	  (list (funcall len map)
+		(funcall lookup inserted :test-key)
+		(funcall len inserted)))))

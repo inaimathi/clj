@@ -43,8 +43,11 @@
 ;;;;;;;;;; Types
 (defun type-literal-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
-  (let ((*type* (read stream)))
-    (eval (read stream))))
+  (let* ((*type* (read stream))
+	 (form (read stream))
+	 (val (eval form)))
+    (assert (typep val *type*) nil "Type checking failure ~s ~s" *type* form)
+    val))
 
 ;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax

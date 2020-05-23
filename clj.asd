@@ -6,7 +6,7 @@
   :license "Specify license here"
   :version "0.0.1"
   :serial t
-  :depends-on (#:named-readtables #:cl-hamt #:optima #:fast-generic-functions #:arrow-macros)
+  :depends-on (#:named-readtables #:cl-hamt #:optima #:fast-generic-functions #:arrow-macros #:test-utils)
   :components ((:module
 		src :components
 		((:file "package")
@@ -15,6 +15,7 @@
 		 (:file "syntax")
 		 (:file "map")
 		 (:file "set")
+		 (:file "generators")
 		 (:file "clj")))))
 
 (asdf:defsystem #:clj-test
