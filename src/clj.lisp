@@ -24,26 +24,5 @@
       (and (listp params)))
      `(lambda ,params ,@body))))
 
-(defmacro -> (exp &rest ops)
-  (reduce
-   (lambda (memo op)
-     (cond ((atom op) `(,op ,memo))
-	   ((and (consp op)
-		 (or (eq 'cl:function (car op))
-		     (eq 'cl:lambda (car op))))
-	    `(funcall ,op ,memo))
-	   (t `(,(first op) ,memo ,@(rest op)))))
-   ops :initial-value exp))
-
-(defmacro ->> (exp &rest ops)
-  (reduce
-   (lambda (memo op)
-     (cond ((atom op) `(,op ,memo))
-	   ((and (consp op)
-		 (or (eq 'cl:function (car op))
-		     (eq 'cl:lambda (car op))))
-	    `(funcall ,op ,memo))
-	   (t `(,@op ,memo))))
-   ops :initial-value exp))
 
 (named-readtables:in-readtable syntax)

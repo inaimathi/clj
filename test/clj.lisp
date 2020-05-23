@@ -2,6 +2,17 @@
 
 (in-package #:clj-test)
 
+(defun expand-arrows (tree)
+  (cond ((atom tree) tree)
+	((and (listp tree)
+	      (member
+	       (car tree)
+	       '(-> ->> <> -<> -<>>
+		 as-> some-> some->> some-<> some-<>>
+		 cond-> cond->>)))
+	 (expand-arrows (macroexpand tree)))
+	((listp tree) (mapcar #'expand-arrows tree))))
+
 (tests
  (subtest "Common threads"
    (is-expand (-> a foo) (foo a)
@@ -22,9 +33,9 @@
 	      "Thread can nest single and multi-arity function calls")
    (is-expand (-> a foo (bar 1) (bar 2) baz) (baz (bar (bar (foo a) 1) 2))
 	      "Thread can nest single and multi-arity function calls. Again.")
-   (is-expand (-> a #'foo (lambda (b) (bar b)) baz)
-	      (BAZ (FUNCALL (LAMBDA (B) (BAR B)) (FUNCALL #'FOO A)))
-	      "Thread handles #' terms and lambda forms properly"))
+   (is (expand-arrows '(-> a #'foo (lambda (b) (bar b)) baz))
+       '(BAZ (FUNCALL (LAMBDA (B) (BAR B)) (FUNCALL #'FOO A)))
+       "Thread handles #' terms and lambda forms properly"))
 
  (subtest "Rthread"
    (is-expand (->> a (foo 1)) (foo 1 a)

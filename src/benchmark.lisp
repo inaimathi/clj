@@ -61,7 +61,7 @@
 (defgeneric fgf-len (container)
   (:generic-function-class fast-generic-functions:fast-generic-function))
 
-(-definlineable fgf-== (a b) (equalp a b))
+;; (-definlineable fgf-== (a b) (equalp a b))
 (-definlineable fgf-== ((a number) (b number)) (= a b))
 (-definlineable fgf-== ((a string) (b string)) (string= a b))
 (-definlineable fgf-== ((a character) (b character)) (char= a b))
