@@ -2,11 +2,6 @@
 
 (defparameter *type* nil)
 
-(defun tightest-equality (equalities)
-  (find-if
-   (lambda (e) (member e equalities :test #'eq))
-   '(cl:= cl:string= cl:eq cl:eql cl:equal cl:equalp clj:==)))
-
 (defun fullest-equality (equalities)
   (find-if
    (lambda (e) (member e equalities :test #'eq))
