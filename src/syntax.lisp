@@ -12,7 +12,6 @@
 
 (defun list->map (lst &key equality)
   (assert (evenp (length lst)) nil "Map literal must have an even number of elements")
-  (format t "TYPE: ~s" *type*)
   (let ((equality (or equality
 		      (if (map-type? *type*)
 			  (equality-function (equality-of (second *type*)))
@@ -45,9 +44,12 @@
   (declare (ignore sub-char numarg))
   (let* ((*type* (read stream))
 	 (form (read stream))
-	 (val (eval form)))
-    (assert (typep val *type*) nil "Type checking failure ~s ~s" *type* form)
-    val))
+	 (res (gensym)))
+    (if *type*
+	`(let ((,res ,form))
+	   (check-type ,res ,*type*)
+	   ,res)
+	res)))
 
 ;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax
