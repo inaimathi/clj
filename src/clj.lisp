@@ -24,4 +24,12 @@
       (and (listp params)))
      `(lambda ,params ,@body))))
 
+(defmacro as (&rest package/alias-pairs)
+  "as duplicates local-package-aliases:set, but checks that the aliased packages exist before establishing them."
+  `(progn
+     (loop for (k v) on (list ,@package/alias-pairs) by #'cddr
+	do (assert (find-package k) nil "No such package: ~s" k)
+	do (assert (symbolp v) nil "Package alias must be a symbol: ~s" v))
+     (local-package-aliases:set ,@package/alias-pairs)))
+
 (named-readtables:in-readtable syntax)

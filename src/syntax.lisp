@@ -58,3 +58,5 @@
   (:macro-char #\} (get-macro-character #\)) nil)
   (:dispatch-macro-char #\# #\{ #'set-literal-reader)
   (:dispatch-macro-char #\# #\# #'type-literal-reader))
+
+(local-package-aliases:set-aliasing-reader (named-readtables:find-readtable 'clj:syntax))
