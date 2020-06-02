@@ -3,7 +3,7 @@
 (defpackage #:clj
   (:use #:cl #:arrow-macros)
   (:shadow #:map #:set)
-  (:export #:syntax #:as
+  (:export #:syntax #:as #:~
 	   #:== #:alist->map #:list->set
 	   #:-> #:->> #:<> #:-<> #:-<>>
 	   #:as-> #:some-> #:some->> #:some-<> #:some-<>>

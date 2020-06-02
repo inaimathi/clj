@@ -6,7 +6,7 @@
   :license "Specify license here"
   :version "0.0.1"
   :serial t
-  :depends-on (#:named-readtables #:cl-hamt #:optima #:arrow-macros #:test-utils #:local-package-aliases)
+  :depends-on (#:named-readtables #:cl-hamt #:optima #:arrow-macros #:test-utils #:local-package-aliases #:agnostic-lizard)
   :components ((:module
 		src :components
 		((:file "package")

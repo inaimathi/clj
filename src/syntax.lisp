@@ -23,7 +23,7 @@
 
 (defun map-literal-reader (stream char)
   (declare (ignore char))
-  (list->map (read-delimited-list #\} stream t)))
+  `(list->map (list ,@(read-delimited-list #\} stream t))))
 
 ;;;;;;;;;; Sets
 (defun list->set (lst)
@@ -37,26 +37,13 @@
 
 (defun set-literal-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
-  (list->set (read-delimited-list #\} stream t)))
-
-;;;;;;;;;; Types
-(defun type-literal-reader (stream sub-char numarg)
-  (declare (ignore sub-char numarg))
-  (let* ((*type* (read stream))
-	 (form (read stream))
-	 (res (gensym)))
-    (if *type*
-	`(let ((,res ,form))
-	   (check-type ,res ,*type*)
-	   ,res)
-	res)))
+  `(list->set (list ,@(read-delimited-list #\} stream t))))
 
 ;;;;;;;;;; Readtable definition
 (named-readtables:defreadtable syntax
   (:merge :standard)
   (:macro-char #\{ #'map-literal-reader nil)
   (:macro-char #\} (get-macro-character #\)) nil)
-  (:dispatch-macro-char #\# #\{ #'set-literal-reader)
-  (:dispatch-macro-char #\# #\# #'type-literal-reader))
+  (:dispatch-macro-char #\# #\{ #'set-literal-reader))
 
 (local-package-aliases:set-aliasing-reader (named-readtables:find-readtable 'clj:syntax))

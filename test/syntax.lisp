@@ -5,14 +5,14 @@
 (tests
 
  (subtest "Dicts"
-   (is t (== (read-from-string "{:a 1 :b 2}") {:a 1 :b 2})
+   (is t (== (eval (read-from-string "{:a 1 :b 2}")) {:a 1 :b 2})
        "Basic dicts are readably printed")
-   (is t (== (read-from-string "{:a 1 :b {:c 3}}") {:a 1 :b {:c 3}})
+   (is t (== (eval (read-from-string "{:a 1 :b {:c 3}}")) {:a 1 :b {:c 3}})
        "Nested dicts are readably printed")
    )
 
  (subtest "Sets"
-   (is t (== (read-from-string "#{1 2 3}") #{1 2 3})
+   (is t (== (eval (read-from-string "#{1 2 3}")) #{1 2 3})
        "Basic set syntax works")
    ;; (is t (cl-hamt:set-eq (read-from-string "#{:a :b :c}") #{:a :b :c})
    ;;     "Basic set syntax works")

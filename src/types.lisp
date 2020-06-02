@@ -2,6 +2,13 @@
 
 (defparameter *type* nil)
 
+(defmacro ~ (exp type)
+  (let ((form (gensym "FORM")))
+    `(let* ((*type* ',type)
+	    (,form ,exp))
+       (check-type ,form ,type)
+       ,form)))
+
 (defun fullest-equality (equalities)
   (find-if
    (lambda (e) (member e equalities :test #'eq))
