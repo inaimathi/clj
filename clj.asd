@@ -1,9 +1,9 @@
 ;;;; clj.asd
 
 (asdf:defsystem #:clj
-  :description "Describe clj here"
-  :author "Your Name <your.name@example.com>"
-  :license "Specify license here"
+  :description "Some clojure conveniences for Common Lisp"
+  :author "inaimathi <leo.zovic@gmail.com>"
+  :license "MIT Expat <https://www.debian.org/legal/licenses/mit>"
   :version "0.0.1"
   :serial t
   :depends-on (#:named-readtables #:cl-hamt #:optima #:arrow-macros #:test-utils #:local-package-aliases #:agnostic-lizard)
@@ -20,8 +20,8 @@
 
 (asdf:defsystem #:clj-test
   :description "Test suite for :clj"
-  :author "Your Name <your.name@example.com>"
-  :license "Specify license here"
+  :author "inaimathi <leo.zovic@gmail.com>"
+  :license "MIT Expat <https://www.debian.org/legal/licenses/mit>"
   :serial t
   :depends-on (#:clj #:test-utils)
   :defsystem-depends-on (#:prove-asdf)
