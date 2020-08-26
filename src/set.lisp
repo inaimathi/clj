@@ -18,3 +18,6 @@
   (cl-hamt:set-insert container elem))
 
 (defmethod len ((container cl-hamt:hash-set)) (cl-hamt:set-size container))
+
+(defmethod contains? ((container cl-hamt:hash-set) elem)
+  (nth-value 1 (cl-hamt:set-lookup container elem)))

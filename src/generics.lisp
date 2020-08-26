@@ -4,6 +4,7 @@
 (defgeneric lookup (container key))
 (defgeneric insert (container elem))
 (defgeneric len (container))
+(defgeneric contains? (container elem))
 
 (defmethod == (a b) (equalp a b))
 (defmethod == ((a number) (b number)) (= a b))
@@ -25,3 +26,6 @@
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))
+
+(defmethod contains? ((container list) elem) (not (not (member elem container :test #'==))))
+(defmethod contains? ((container hash-table) elem) (nth-value 1 (gethash elem container)))

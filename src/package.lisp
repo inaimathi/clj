@@ -8,4 +8,6 @@
 	   #:-> #:->> #:<> #:-<> #:-<>>
 	   #:as-> #:some-> #:some->> #:some-<> #:some-<>>
 	   #:cond-> #:cond->>
-	   #:if-let #:when-let))
+	   #:if-let #:when-let
+
+	   #:lookup #:insert #:len #:contains?))

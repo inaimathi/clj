@@ -22,3 +22,6 @@
   (cl-hamt:dict-insert container (car k/v) (cdr k/v)))
 
 (defmethod len ((container cl-hamt:hash-dict)) (cl-hamt:dict-size container))
+
+(defmethod contains? ((container cl-hamt:hash-dict) elem)
+  (nth-value 1 (cl-hamt:dict-lookup container elem)))
