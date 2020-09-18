@@ -15,8 +15,10 @@
 (defmethod == ((a cl-hamt:hash-dict) (b cl-hamt:hash-dict))
   (cl-hamt:dict-eq a b :value-test #'==))
 
-(defmethod lookup ((container cl-hamt:hash-dict) key)
-  (cl-hamt:dict-lookup container key))
+(defmethod lookup ((container cl-hamt:hash-dict) key &key default)
+  (if (nth-value 1 (cl-hamt:dict-lookup container key))
+      (cl-hamt:dict-lookup container key)
+      default))
 
 (defmethod insert ((container cl-hamt:hash-dict) k/v)
   (cl-hamt:dict-insert container (car k/v) (cdr k/v)))
@@ -25,3 +27,19 @@
 
 (defmethod contains? ((container cl-hamt:hash-dict) elem)
   (nth-value 1 (cl-hamt:dict-lookup container elem)))
+
+(defmethod merge-with ((f function) (a cl-hamt:hash-dict) (b cl-hamt:hash-dict))
+  (cl-hamt:dict-reduce
+   (lambda (memo k v)
+     (cl-hamt:dict-insert
+      memo k
+      (if (nth-value 1 (cl-hamt:dict-lookup memo k))
+	  (funcall f (cl-hamt:dict-lookup memo k) v)
+	  v)))
+   b a))
+
+(defmethod update ((container cl-hamt:hash-dict) k f)
+  (cl-hamt:dict-insert container k (funcall f (cl-hamt:dict-lookup container k))))
+
+(defmethod as-list ((container cl-hamt:hash-dict))
+  (cl-hamt:dict->alist container))

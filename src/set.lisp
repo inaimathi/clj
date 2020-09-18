@@ -11,8 +11,8 @@
 (defmethod == ((a cl-hamt:hash-set) (b cl-hamt:hash-set))
   (cl-hamt:set-eq a b))
 
-(defmethod lookup ((container cl-hamt:hash-set) key)
-  (cl-hamt:set-lookup container key))
+(defmethod lookup ((container cl-hamt:hash-set) key &key default)
+  (or (cl-hamt:set-lookup container key) default))
 
 (defmethod insert ((container cl-hamt:hash-set) elem)
   (cl-hamt:set-insert container elem))
@@ -20,4 +20,4 @@
 (defmethod len ((container cl-hamt:hash-set)) (cl-hamt:set-size container))
 
 (defmethod contains? ((container cl-hamt:hash-set) elem)
-  (nth-value 1 (cl-hamt:set-lookup container elem)))
+  (cl-hamt:set-lookup container elem))

@@ -10,4 +10,6 @@
 	   #:cond-> #:cond->>
 	   #:if-let #:when-let
 
-	   #:lookup #:insert #:len #:contains?))
+	   #:lookup #:insert #:len #:contains?
+
+	   #:merge-with #:update #:as-list))
