@@ -18,6 +18,9 @@
   (declare (ignore v))
   (cl-hamt:set-insert container elem))
 
+(defmethod dissoc ((container cl-hamt:hash-set) &rest ks-or-elems)
+  (apply #'cl-hamt:set-remove container ks-or-elems))
+
 (defmethod len ((container cl-hamt:hash-set)) (cl-hamt:set-size container))
 
 (defmethod contains? ((container cl-hamt:hash-set) elem)

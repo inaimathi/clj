@@ -6,6 +6,7 @@
 (defgeneric == (a b))
 (defgeneric lookup (container key &key default))
 (defgeneric insert (container k-or-elem &optional v))
+(defgeneric dissoc (container &rest ks-or-elems))
 (defgeneric len (container))
 (defgeneric contains? (container elem))
 
@@ -30,6 +31,13 @@
   ;; NOTE - strictly, this should copy the hash-table in order to be functional
   ;;        Not right now.
   (setf (gethash k container) v))
+
+(defmethod dissoc ((container list) &rest ks-or-elems)
+  (let ((s (list->set ks-or-elems)))
+    (loop for elem in container
+       if (not (contains? s elem)) collect elem)))
+(defmethod dissoc ((container hash-table) &rest ks-or-elems)
+  (reduce (lambda (memo el) (remhash el memo) memo) ks-or-elems))
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))
