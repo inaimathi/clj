@@ -20,8 +20,8 @@
       (cl-hamt:dict-lookup container key)
       default))
 
-(defmethod insert ((container cl-hamt:hash-dict) k/v)
-  (cl-hamt:dict-insert container (car k/v) (cdr k/v)))
+(defmethod insert ((container cl-hamt:hash-dict) k &optional v)
+  (cl-hamt:dict-insert container k v))
 
 (defmethod len ((container cl-hamt:hash-dict)) (cl-hamt:dict-size container))
 

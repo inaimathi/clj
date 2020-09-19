@@ -5,7 +5,7 @@
 
 (defgeneric == (a b))
 (defgeneric lookup (container key &key default))
-(defgeneric insert (container elem))
+(defgeneric insert (container k-or-elem &optional v))
 (defgeneric len (container))
 (defgeneric contains? (container elem))
 
@@ -23,11 +23,13 @@
       (gethash key container)
       default))
 
-(defmethod insert ((container list) elem) (cons elem container))
-(defmethod insert ((container hash-table) k/v)
+(defmethod insert ((container list) elem &optional v)
+  (declare (ignore v))
+  (cons elem container))
+(defmethod insert ((container hash-table) k &optional v)
   ;; NOTE - strictly, this should copy the hash-table in order to be functional
   ;;        Not right now.
-  (setf (gethash (car k/v) container) (cdr k/v)))
+  (setf (gethash k container) v))
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))
