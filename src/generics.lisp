@@ -5,7 +5,7 @@
 
 (defgeneric == (a b))
 (defgeneric lookup (container key &key default))
-(defgeneric insert (container k-or-elem &optional v))
+(defgeneric insert (container &rest args))
 (defgeneric dissoc (container &rest ks-or-elems))
 (defgeneric len (container))
 (defgeneric contains? (container elem))
@@ -25,13 +25,17 @@
       (gethash key container)
       default))
 
-(defmethod insert ((container list) elem &optional v)
-  (declare (ignore v))
-  (cons elem container))
-(defmethod insert ((container hash-table) k &optional v)
+(defmethod insert ((container list) &rest args)
+  (let ((res container))
+    (loop for el in args
+       do (setf res (cons el res)))
+    res))
+(defmethod insert ((container hash-table) &rest args)
   ;; NOTE - strictly, this should copy the hash-table in order to be functional
   ;;        Not right now.
-  (setf (gethash k container) v))
+  (loop for (k v) on args by #'cddr
+     do (setf (gethash k container) v))
+  container)
 
 (defmethod dissoc ((container list) &rest ks-or-elems)
   (let ((s (list->set ks-or-elems)))

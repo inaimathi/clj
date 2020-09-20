@@ -14,9 +14,8 @@
 (defmethod lookup ((container cl-hamt:hash-set) key &key default)
   (or (cl-hamt:set-lookup container key) default))
 
-(defmethod insert ((container cl-hamt:hash-set) elem &optional v)
-  (declare (ignore v))
-  (cl-hamt:set-insert container elem))
+(defmethod insert ((container cl-hamt:hash-set) &rest args)
+  (apply #'cl-hamt:set-insert container args))
 
 (defmethod dissoc ((container cl-hamt:hash-set) &rest ks-or-elems)
   (apply #'cl-hamt:set-remove container ks-or-elems))

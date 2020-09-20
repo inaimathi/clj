@@ -20,8 +20,8 @@
       (cl-hamt:dict-lookup container key)
       default))
 
-(defmethod insert ((container cl-hamt:hash-dict) k &optional v)
-  (cl-hamt:dict-insert container k v))
+(defmethod insert ((container cl-hamt:hash-dict) &rest args)
+  (apply #'cl-hamt:dict-insert container args))
 
 (defmethod dissoc ((container cl-hamt:hash-dict) &rest ks-or-elems)
   (apply #'cl-hamt:dict-remove container ks-or-elems))
