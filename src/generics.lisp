@@ -9,6 +9,7 @@
 (defgeneric dissoc (container &rest ks-or-elems))
 (defgeneric len (container))
 (defgeneric contains? (container elem))
+(defgeneric empty? (container))
 
 (defmethod == (a b) (equalp a b))
 (defmethod == ((a number) (b number)) (= a b))
@@ -41,7 +42,12 @@
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))
+(defmethod len ((container string)) (length container))
 
 (defmethod contains? ((container list) elem) (not (not (member elem container :test #'==))))
 (defmethod contains? ((container hash-table) elem) (nth-value 1 (gethash elem container)))
 (defmethod contains? ((container string) (elem character)) (loop for c across container if (char= elem c) do (return t)))
+
+(defmethod empty? ((container list)) (null list))
+(defmethod empty? ((container hash-table)) (= 0 (hash-table-count container)))
+(defmethod empty? ((container string)) (= 0 (length container)))
