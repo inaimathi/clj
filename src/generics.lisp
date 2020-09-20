@@ -10,6 +10,7 @@
 (defgeneric len (container))
 (defgeneric contains? (container elem))
 (defgeneric empty? (container))
+(defgeneric as-list (container))
 
 (defmethod == (a b) (equalp a b))
 (defmethod == ((a number) (b number)) (= a b))
@@ -55,3 +56,9 @@
 (defmethod empty? ((container list)) (null list))
 (defmethod empty? ((container hash-table)) (= 0 (hash-table-count container)))
 (defmethod empty? ((container string)) (= 0 (length container)))
+
+(defmethod as-list ((container list)) container)
+(defmethod as-list ((container hash-table))
+  (loop for k being the hash-keys of container
+     for v being the hash-values of container
+     collect (cons k v)))

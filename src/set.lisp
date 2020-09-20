@@ -24,3 +24,6 @@
 
 (defmethod contains? ((container cl-hamt:hash-set) elem)
   (cl-hamt:set-lookup container elem))
+
+(defmethod as-list ((container cl-hamt:hash-set))
+  (cl-hamt:set->list container))
