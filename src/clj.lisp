@@ -32,4 +32,7 @@
 	do (assert (symbolp v) nil "Package alias must be a symbol: ~s" v))
      (local-package-aliases:set ,@package/alias-pairs)))
 
+(defun inc (num) (+ num 1))
+(defun dec (num) (- num 1))
+
 (named-readtables:in-readtable syntax)

@@ -10,6 +10,8 @@
 	   #:cond-> #:cond->>
 	   #:if-let #:when-let
 
+	   #:inc #:dec
+
 	   #:lookup #:insert #:dissoc #:len #:contains? #:empty?
 
 	   #:merge-with #:update #:as-list))
