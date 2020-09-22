@@ -7,6 +7,7 @@
 (defgeneric lookup (container key &key default))
 (defgeneric insert (container &rest args))
 (defgeneric dissoc (container &rest ks-or-elems))
+(defgeneric invert (container))
 (defgeneric len (container))
 (defgeneric contains? (container elem))
 (defgeneric empty? (container))
@@ -44,6 +45,20 @@
        if (not (contains? s elem)) collect elem)))
 (defmethod dissoc ((container hash-table) &rest ks-or-elems)
   (reduce (lambda (memo el) (remhash el memo) memo) ks-or-elems))
+
+(defmethod invert ((container list))
+  (let ((ct -1))
+    (reduce
+     (lambda (memo elem) (insert memo elem (incf ct)))
+     container :initial-value {})))
+(defmethod invert ((container hash-table))
+  (let* ((test (equality-of (loop for v being the hash-values of container)))
+	 (test (if (contains? #{'cl:eq 'cl:eql 'cl:equal 'cl:equalp} test) test 'cl:equalp))
+	 (dest (make-hash-table :test test)))
+    (loop for k being the hash-keys of container
+       for v being the hash-values of container
+       do (setf (gethash v dest) k))
+    dest))
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))

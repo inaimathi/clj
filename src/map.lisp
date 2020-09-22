@@ -26,6 +26,11 @@
 (defmethod dissoc ((container cl-hamt:hash-dict) &rest ks-or-elems)
   (apply #'cl-hamt:dict-remove container ks-or-elems))
 
+(defmethod invert ((container cl-hamt:hash-dict))
+  (cl-hamt:dict-reduce
+   (lambda (memo k v) (insert memo v k))
+   container {}))
+
 (defmethod len ((container cl-hamt:hash-dict)) (cl-hamt:dict-size container))
 
 (defmethod contains? ((container cl-hamt:hash-dict) elem)

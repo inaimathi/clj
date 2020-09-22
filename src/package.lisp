@@ -12,6 +12,6 @@
 
 	   #:inc #:dec
 
-	   #:lookup #:insert #:dissoc #:len #:contains? #:empty?
+	   #:lookup #:insert #:dissoc #:invert #:len #:contains? #:empty?
 
 	   #:merge-with #:update #:as-list))
