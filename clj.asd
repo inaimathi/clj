@@ -10,9 +10,9 @@
   :components ((:module
 		src :components
 		((:file "package")
-		 (:file "generics")
 		 (:file "types")
 		 (:file "syntax")
+		 (:file "generics")
 		 (:file "map")
 		 (:file "set")
 		 (:file "generators")

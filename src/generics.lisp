@@ -51,14 +51,15 @@
     (reduce
      (lambda (memo elem) (insert memo elem (incf ct)))
      container :initial-value {})))
-(defmethod invert ((container hash-table))
-  (let* ((test (equality-of (loop for v being the hash-values of container)))
-	 (test (if (contains? #{'cl:eq 'cl:eql 'cl:equal 'cl:equalp} test) test 'cl:equalp))
-	 (dest (make-hash-table :test test)))
-    (loop for k being the hash-keys of container
-       for v being the hash-values of container
-       do (setf (gethash v dest) k))
-    dest))
+(let ((ops (list->set '(cl:eq cl:eql cl:equal cl:equalp))))
+  (defmethod invert ((container hash-table))
+    (let* ((test (equality-of (loop for v being the hash-values of container)))
+	   (test (if (contains? ops test) test 'cl:equalp))
+	   (dest (make-hash-table :test test)))
+      (loop for k being the hash-keys of container
+	 for v being the hash-values of container
+	 do (setf (gethash v dest) k))
+      dest)))
 
 (defmethod len ((container list)) (length container))
 (defmethod len ((container hash-table)) (hash-table-count container))
