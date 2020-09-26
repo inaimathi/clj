@@ -14,4 +14,5 @@
 
 	   #:lookup #:insert #:dissoc #:invert #:len #:contains? #:empty?
 
-	   #:merge-with #:update #:as-list))
+	   #:merge-with #:update #:as-list
+	   #:seq? #:fmap #:walk))

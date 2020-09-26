@@ -12,6 +12,8 @@
 (defgeneric contains? (container elem))
 (defgeneric empty? (container))
 (defgeneric as-list (container))
+(defgeneric seq? (container))
+(defgeneric fmap (f container))
 
 (defmethod == (a b) (equalp a b))
 (defmethod == ((a number) (b number)) (= a b))
@@ -78,3 +80,22 @@
   (loop for k being the hash-keys of container
      for v being the hash-values of container
      collect (cons k v)))
+
+(defmethod seq? (thing) nil)
+(defmethod seq? ((container list)) t)
+(defmethod seq? ((container hash-table)) t)
+
+(defmethod fmap ((f function) (container list))
+  (mapcar f container))
+(defmethod fmap ((f function) (container hash-table))
+  (let ((h (make-hash-table :test (hash-table-test container))))
+    (loop for k being the hash-keys of container
+       for v being the hash-values of container
+       do (let ((res (funcall f k v)))
+	    (setf (gethash (car res) h) (cdr res))))
+    h))
+
+(defun walk (f container)
+  (if (not (seq? container))
+      (funcall f container)
+      (fmap f container)))

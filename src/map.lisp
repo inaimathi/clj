@@ -51,3 +51,11 @@
 
 (defmethod as-list ((container cl-hamt:hash-dict))
   (cl-hamt:dict->alist container))
+
+(defmethod seq? ((container cl-hamt:hash-dict)) t)
+(defmethod fmap ((f function) (container cl-hamt:hash-dict))
+  (cl-hamt:dict-reduce
+   (lambda (memo k v)
+     (let ((res (funcall f k v)))
+       (cl-hamt:dict-insert memo (car res) (cdr res))))
+   container {}))

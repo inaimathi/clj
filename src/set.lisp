@@ -27,3 +27,7 @@
 
 (defmethod as-list ((container cl-hamt:hash-set))
   (cl-hamt:set->list container))
+
+(defmethod seq? ((container cl-hamt:hash-set)) t)
+(defmethod fmap ((f function) (container cl-hamt:hash-set))
+  (cl-hamt:set-map f container))
