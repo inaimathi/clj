@@ -1,4 +1,5 @@
 (in-package :clj)
+(named-readtables:in-readtable syntax)
 
 (defmethod print-object ((object cl-hamt:hash-dict) stream)
   "The printable representation for clj:maps"
@@ -11,6 +12,8 @@
 
 (defmethod cl-murmurhash:murmurhash ((object cl-hamt:hash-dict) &key (seed cl-murmurhash:*default-seed*) mix-only)
   (cl-murmurhash:murmurhash (cl-hamt:dict->alist object) :seed seed :mix-only mix-only))
+
+(defun map? (thing) (typep thing 'cl-hamt:hash-dict))
 
 (defmethod == ((a cl-hamt:hash-dict) (b cl-hamt:hash-dict))
   (cl-hamt:dict-eq a b :value-test #'==))
@@ -57,5 +60,7 @@
   (cl-hamt:dict-reduce
    (lambda (memo k v)
      (let ((res (funcall f k v)))
-       (cl-hamt:dict-insert memo (car res) (cdr res))))
+       (if res
+	   (cl-hamt:dict-insert memo (car res) (cdr res))
+	   memo)))
    container {}))

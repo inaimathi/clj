@@ -71,7 +71,7 @@
 (defmethod contains? ((container hash-table) elem) (nth-value 1 (gethash elem container)))
 (defmethod contains? ((container string) (elem character)) (loop for c across container if (char= elem c) do (return t)))
 
-(defmethod empty? ((container list)) (null list))
+(defmethod empty? ((container list)) (null container))
 (defmethod empty? ((container hash-table)) (= 0 (hash-table-count container)))
 (defmethod empty? ((container string)) (= 0 (length container)))
 
