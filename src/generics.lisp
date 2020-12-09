@@ -14,6 +14,7 @@
 (defgeneric as-list (container))
 (defgeneric seq? (container))
 (defgeneric fmap (f container))
+(defgeneric union (container &rest containers))
 
 (defmethod == (a b) (equalp a b))
 (defmethod == ((a number) (b number)) (= a b))
@@ -99,3 +100,8 @@
   (if (not (seq? container))
       (funcall f container)
       (fmap f container)))
+
+(defmethod union ((container list) &rest lists)
+  (reduce
+   (lambda (memo lst) (cl:union memo lst :test #'==))
+   (cons container lists)))

@@ -2,7 +2,7 @@
 
 (defpackage #:clj
   (:use #:cl #:arrow-macros)
-  (:shadow #:map #:set)
+  (:shadow #:map #:set #:union)
   (:export #:syntax #:as #:~ #:fn
 	   #:== #:alist->map #:list->set
 	   #:-> #:->> #:<> #:-<> #:-<>>
@@ -15,4 +15,6 @@
 	   #:lookup #:insert #:dissoc #:invert #:len #:contains? #:empty?
 
 	   #:merge-with #:update #:as-list
-	   #:set? #:map? #:seq? #:fmap #:walk))
+	   #:set? #:map? #:seq? #:fmap #:walk
+
+	   #:difference #:union))

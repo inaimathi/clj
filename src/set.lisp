@@ -33,3 +33,9 @@
 (defmethod seq? ((container cl-hamt:hash-set)) t)
 (defmethod fmap ((f function) (container cl-hamt:hash-set))
   (cl-hamt:set-map f container))
+
+(defmethod difference ((a cl-hamt:hash-set) &rest sets)
+  (apply #'cl-hamt:set-diff a sets))
+
+(defmethod union ((a cl-hamt:hash-set) &rest sets)
+  (apply #'cl-hamt:set-union a sets))
