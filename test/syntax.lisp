@@ -1,4 +1,4 @@
-(in-package #:clj-test)
+(in-package #:clj/test)
 
 (named-readtables:in-readtable clj:syntax)
 

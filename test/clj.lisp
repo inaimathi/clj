@@ -1,6 +1,6 @@
 ;;;; test/clj.lisp
 
-(in-package #:clj-test)
+(in-package #:clj/test)
 
 (tests
  (subtest "Common threads"

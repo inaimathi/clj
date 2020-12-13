@@ -18,7 +18,7 @@
 		 (:file "generators")
 		 (:file "clj")))))
 
-(asdf:defsystem #:clj-test
+(asdf:defsystem #:clj/test
   :description "Test suite for :clj"
   :author "inaimathi <leo.zovic@gmail.com>"
   :license "MIT Expat <https://www.debian.org/legal/licenses/mit>"
